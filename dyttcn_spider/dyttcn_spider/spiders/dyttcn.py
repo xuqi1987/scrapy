@@ -63,9 +63,9 @@ class DyttcnSpider(scrapy.Spider):
 
 
         # 提取播放地址
-        play_link = response.css('iframe[src^="https://www.dyttcn.com/m3u8/"]::attr(src)').get().strip()
+        play_link = response.css('iframe[src^="https://www.dyttcn.com/m3u8/"]::attr(src)').get()
         if play_link:
-            play_link = play_link.split('url=')[-1]
+            play_link = play_link.split('url=')[-1].strip()
 
         # 如果 year 不是 2024 或 2023，或 play_link 为空，则丢弃该电影条目
         if movie_info.get('year') not in ['2024', '2023'] or not play_link:
