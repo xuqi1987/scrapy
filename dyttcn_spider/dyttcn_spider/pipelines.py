@@ -24,10 +24,10 @@ class DyttcnSpiderPipeline:
     def open_spider(self, spider):
         # 连接到 MySQL 数据库
         self.conn = pymysql.connect(
-            host='your_host',
-            user='your_username',
-            password='your_password',
-            database='your_database',
+            host='47.103.43.252',
+            user='root',
+            password='Xq111111',
+            database='my_database',
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
