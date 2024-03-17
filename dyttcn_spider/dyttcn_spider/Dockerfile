@@ -16,5 +16,14 @@ WORKDIR /app/scrapy/dyttcn_spider/
 # 安装依赖
 RUN pip install -r requirements.txt
 
-# 设置启动命令
-CMD ["scrapy", "crawl", "dyttcn"]
+# 添加定时任务脚本
+COPY scrapy_crawl.sh /app/scrapy_crawl.sh
+
+# 赋予脚本可执行权限
+RUN chmod +x /app/scrapy_crawl.sh
+
+# 设置定时任务
+RUN echo "0 1 * * * root /app/scrapy_crawl.sh" >> /etc/crontab
+
+# 启动 cron 服务
+CMD ["cron", "-f"]
