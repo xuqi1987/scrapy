@@ -1,4 +1,5 @@
 import scrapy
+import re
 from scrapy_splash import SplashRequest
 from dyttcn_spider.items import MovieItem
 
@@ -62,10 +63,21 @@ class DyttcnSpider(scrapy.Spider):
         image_url = response.xpath('//div[@style="text-align: center;"]/img/@src').extract_first()
 
 
+  
         # 提取播放地址
         play_link = response.css('iframe[src^="https://www.dyttcn.com/m3u8/"]::attr(src)').get()
         if play_link:
-            play_link = play_link.split('url=')[-1].strip()
+            print(play_link)
+
+            # 使用正则表达式提取 "url=" 后面的部分
+            url_pattern = re.compile(r'url=(https?://[^&]+)')
+            match = url_pattern.search(play_link)
+
+            if match:
+                play_link = match.group(1)
+                print(play_link)
+            else:
+                print("No URL found in the string.")
 
         # 如果 year 不是 2024 或 2023，或 play_link 为空，则丢弃该电影条目
         if movie_info.get('year') not in ['2024', '2023'] or not play_link:

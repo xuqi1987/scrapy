@@ -22,16 +22,21 @@ class JsonWriterPipeline:
 
 class DyttcnSpiderPipeline:
     def open_spider(self, spider):
-        # 连接到 MySQL 数据库
-        self.conn = pymysql.connect(
-            host='47.103.43.252',
-            user='root',
-            password='Xq111111',
-            database='my_database',
-            charset='utf8mb4',
-            cursorclass=pymysql.cursors.DictCursor
-        )
-        self.cur = self.conn.cursor()
+        try:
+            # 连接到 MySQL 数据库
+            self.conn = pymysql.connect(
+                host='47.103.43.252',
+                user='root',
+                password='Xq111111',
+                database='my_database',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor
+            )
+            # 创建游标对象
+            self.cur = self.conn.cursor()
+            print("成功连接到 MySQL 数据库！")
+        except pymysql.Error as e:
+            print("连接到 MySQL 数据库时发生错误:", e)
 
     def close_spider(self, spider):
         # 关闭数据库连接
@@ -75,3 +80,5 @@ class DyttcnSpiderPipeline:
         self.conn.commit()
 
         return item
+
+
