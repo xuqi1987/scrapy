@@ -34,4 +34,4 @@ def provide_m3u():
         return f"Error retrieving data from database: {e}"
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8081, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
